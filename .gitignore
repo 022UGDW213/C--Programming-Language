@@ -1,0 +1,15 @@
+# Build output produced by `dotnet build` / `dotnet run`
+[Bb]in/
+[Oo]bj/
+
+# IDE and user-specific state
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+
+# Test and tooling output
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
