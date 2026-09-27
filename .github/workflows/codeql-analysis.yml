@@ -2,7 +2,14 @@
 #
 # The analysis matrix lists exactly one language, 'csharp', because this
 # repository contains only C# sources (three Program.cs files plus their
-# .csproj files; GitHub's own language detection reports "C#" for the repo).
+# .csproj files) and GitHub's own language detection reports "C#" for the repo:
+#
+#   curl -s https://api.github.com/repos/022UGDW213/C--Programming-Language \
+#     | python3 -c 'import json,sys; print(json.load(sys.stdin)["language"])'   # C#
+#
+# The action tags referenced below were checked to exist:
+#   git ls-remote --tags https://github.com/actions/checkout.git 'v7*'      -> v7, v7.0.0, v7.0.1
+#   git ls-remote --tags https://github.com/github/codeql-action.git 'v4*'  -> ... v4.38.2
 name: "CodeQL"
 
 on:
@@ -39,6 +46,12 @@ jobs:
     # The lessons are compiled .NET projects, so the database is built by
     # autobuild. If that fails, replace this step with explicit build steps
     # between the init and analyze steps (build-mode: manual).
+    #
+    # Note: at v4 the autobuild action's own action.yml says it is superseded
+    # by the `build-mode: autobuild` input on the init action ("Only used for
+    # analyzing languages that require a build. Use the `build-mode: autobuild`
+    # input in the `init` action instead."). The separate step below is kept
+    # because it is the shape this workflow has always had and still resolves.
     - name: Autobuild
       uses: github/codeql-action/autobuild@v4
 
